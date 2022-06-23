@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ristask">
+    package="com.hafidzsulistyan.ristask">
    <application
-        android:label="ristask"
+        android:label="Ristask"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
