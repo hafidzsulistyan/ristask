@@ -10,7 +10,8 @@ import 'package:ristask/widgets/texts/subtitle_text.dart';
 import 'package:ristask/widgets/texts/title_text.dart';
 
 class TaskHomePage extends StatefulWidget {
-  const TaskHomePage({Key? key}) : super(key: key);
+  const TaskHomePage({required this.user, Key? key}) : super(key: key);
+  final String user;
 
   @override
   _TaskHomePageState createState() => _TaskHomePageState();
@@ -81,7 +82,7 @@ class _TaskHomePageState extends State<TaskHomePage> {
                           ),
                         )
                       : FutureBuilder(
-                          future: taskDatabase.getTask(),
+                          future: taskDatabase.getAllTask(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -104,7 +105,7 @@ class _TaskHomePageState extends State<TaskHomePage> {
                                 (!snapshot.hasData ||
                                     (snapshot.data as List).isEmpty)) {
                               return Center(
-                                child: Text('Data Unavailable'),
+                                child: Text('No Task Available'),
                               );
                             }
                             if (snapshot.connectionState ==
@@ -117,7 +118,6 @@ class _TaskHomePageState extends State<TaskHomePage> {
                                   physics: BouncingScrollPhysics(),
                                   itemCount: tasks.length,
                                   itemBuilder: (context, index) {
-																		print(tasks[index].date);
                                     return buildTaskCard(tasks[index]);
                                   });
                             }
@@ -181,7 +181,7 @@ class _TaskHomePageState extends State<TaskHomePage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (_titleText = TitleText()..text = 'Welcome').child,
+              (_titleText = TitleText()..text = 'Welcome ${widget.user}').child,
               (_smallText = SmallText()
                     ..text = 'Hope you have a wonderful day'
                     ..color = secondaryColor)
@@ -324,7 +324,8 @@ class _TaskHomePageState extends State<TaskHomePage> {
                         .child,
                   ],
                 ),
-              ))
+              )
+          )
         ],
       ),
     );

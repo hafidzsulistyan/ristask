@@ -219,11 +219,12 @@ class _TaskFormPageState extends State<TaskFormPage> {
     );
   }
 
-  Container buildInput(
-      {double? height = 50,
-      TextInputType? inputtype,
-      bool readOnly = false,
-      TextEditingController? controller}) {
+  Container buildInput({
+    double? height = 50,
+    TextInputType? inputtype,
+    bool readOnly = false,
+    TextEditingController? controller
+  }) {
     return Container(
       height: height,
       decoration: BoxDecoration(boxShadow: [

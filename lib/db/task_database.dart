@@ -1,4 +1,5 @@
 import 'package:path/path.dart';
+import 'package:ristask/db/user_cache.dart';
 import 'package:ristask/model/task.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -31,9 +32,16 @@ class TaskDatabase {
     return task.copyWith(id: id);
   }
 
-  Future<List<Task>> getTask() async {
-    final result = await database.query(taskTable);
+  Future<List<Task>> getAllTask() async {
+    final user = await UserCache.getUser();
+    final result = await database.query(taskTable, where: 'user = ?', whereArgs: [user]);
     return result.map((json) => Task.fromJson(json)).toList();
+  }
+
+  Future<int?> getCount({required String user, required String date}) async {
+    int? count = Sqflite.firstIntValue(await database.rawQuery(
+        'select count(*) from $taskTable where user=? and date=?', [user, date]));
+    return count;
   }
 
   Future<int> update(Task task) async {
